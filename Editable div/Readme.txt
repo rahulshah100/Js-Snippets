@@ -1,0 +1,2 @@
+An Editable Div made using js with the help of localStorage
+Click on the div, edit the text in it ,click anywhere outside of the div and div will remember what u've wrote,again u can edit div by clicking inside it .Close the tab ,Open the url again and u'll have inside the div what u've wrote last in it 

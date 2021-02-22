@@ -1,0 +1,1 @@
+With the use of Javascript ,this is a simple program to display text and url of those links On a webpage which will include a given character/word in their url.The display could be seen on our web-console

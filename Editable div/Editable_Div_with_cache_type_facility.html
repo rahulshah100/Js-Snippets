@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <h1> Welcome to Today</h1>
+        <div id="myfirst" class="child red good" id="first">child 1</div>
+    </div>
+
+<script>
+// Create a new element
+let divElem = document.createElement('div');
+
+// Add text to that created element
+let val = localStorage.getItem('text');
+let text;
+if (val==null){
+ text = document.createTextNode('This is my element. click to edit it');
+}
+else{
+    text = document.createTextNode(val);
+}
+divElem.appendChild(text);
+
+// Give element id, style and class
+divElem.setAttribute('id', 'elem');
+divElem.setAttribute('class', 'elem');
+divElem.setAttribute('style', 'border:2px solid black; width: 154px; margin: 34px; padding:23px;');
+
+// Grab the main container
+let container = document.querySelector('.container');
+let first = document.getElementById('myfirst');
+
+// Insert the element before element with id first
+container.insertBefore(divElem, first);
+
+// add event listener to the divElem
+divElem.addEventListener('click', function () {    
+    let noTextAreas = document.getElementsByClassName('textarea').length;   
+             //This above line'll get us an HTMLCollection as we're using getElementByClassName.And for first time when click will happen in div,as such till this point,we've not encountered any class='textarea' our HTMLCollection is empty & it's length = 0
+    console.log(noTextAreas)
+    if(noTextAreas ==0){
+    let html = elem.innerHTML;  
+            //Note we can use divElem instead of elem .As elem is id of divElem & as i gotto discover we can access dom element using its id directly ,and tht's if & only if tht id dont have a dash ('-') i.e. id='rk-shah' wont work  
+    divElem.innerHTML = ` <textarea class="textarea form-control" id="textarea" rows="3"> ${html}</textarea>`;    //For the first time when div is clicked into we'd like to show in it the above appended textNode saying "let noTextAreas = document.getElementsByClassName('textarea')" 
+    }   //From here on Now our noTextAreas would've it's length 1 and so now if we click anywhere then our click event is again triggered but this time due to if condition our html will not update by elem.innerHTML & thts what we want ,becoz if it did then we'll be getting <textarea class=".....> & thts not what we would want to be shown in our div
+        //So from now on we cant use above code ,otherwise our innerHTML will be like <textarea...> hence after first click we gotta mention updation of innerHTML by other way and thts whts done below
+        
+
+    //listen for the blur event on textarea after clicking outside of div ,whatever is inthe div at tht time 
+    let textarea = document.getElementById('textarea');
+    textarea.addEventListener('blur', function() {
+        console.log(textarea.value)
+        elem.innerHTML = textarea.value;    //After first time having clicked in div ,now as we'll click anywhere, our div's content would become whats inside text area ! Notice no <textarea> but just taxtarea's val.
+        // Now as we would click again as our div dont have any <textarea> in it,hence again our above if condtion wale statements would run for once unitl <textare> becomes a content in our div
+        localStorage.setItem('text', textarea.value);//Now tht the next time as page is opened we'd have inside our div what was their last time
+    })
+});
+</script>
+</body>
+</html>
