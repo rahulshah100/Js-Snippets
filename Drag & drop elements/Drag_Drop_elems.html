@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Drag and Drop</title>
+    <style>
+        body {
+            background: darkslateblue;
+        }
+
+        .imgBox {
+            background-image: url('an_image.jpg');
+            position: relative;
+            top: 7px;
+            left: 5px;
+            height: 185px;
+            width: 228px;
+            cursor: pointer;
+        }
+
+        .whiteBox {
+            display: inline-block;  
+            height: 195px;
+            width: 235px;
+            margin: 10px;
+            background-color: white;
+            border: 3px black solid;
+        }
+
+        .hold {
+            border: solid red 4px;
+        }
+
+        .dashed {
+            background: rgb(214, 206, 206);
+            border-style: dashed;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="whiteBox">
+        <div class="imgBox" draggable="true"></div>
+    </div>
+    <div class="whiteBox"></div>
+    <div class="whiteBox"></div>
+    <div class="whiteBox"></div>
+
+    <script>console.log('This is drag and drop utility');
+        const imgBox = document.querySelector('.imgBox');
+        const whiteBoxes = document.getElementsByClassName('whiteBox');
+
+        //Events for imgbox
+        imgBox.addEventListener('dragstart', (e) => {
+            console.log('DragStart has been triggered');
+            e.target.className += ' hold';
+            // e.target will give the element tht triggered this specific event 
+            // here above a space in quotes was necessary so tht there be's a space b/n 2 classname i.e class="ab cd" & not "abcd".
+            setTimeout(() => {
+                e.target.className = 'hide';
+            }, 0);
+            //After dragging an image it's box was still seen left empty in whiteBox so to hide it we used hide classname which has css of display:none.But then ,here as we dragged img i.e. as this event's fired ,all lines including this hide line were immediately executed & so the image we could be dragging ,instantly become absent.Hence we were not able to drag it as the thing become absent as soon as we clicked it.TO make this 2 statements happen one after other i.e. once we start dragging ,then hide the image,...for tht we use setTimeout with 0sec.Also while the original image was hided ,we already had the image grabbed which we were dragging,hence tht already grabbed image remained as it is even after hiding orignal image
+        });
+
+        imgBox.addEventListener('dragend', (e) => {
+            console.log('DragEnd has been triggered');
+            e.target.className = 'imgBox';
+            //Observe:here clasName += isnt used but we're assigning className just to be imgBox ,so this removes above given border & hide class & so now the only classname to imgBox wouldbe 'imgBox'
+        });
+
+        //Events for whiteBoxes
+        for (whiteBox of whiteBoxes) {  //this will add all the below eventlistners to all the elements tht whiteBoxes variable would be holding.
+            whiteBox.addEventListener('dragover', (e) => {
+                console.log('DragOver has been triggered');
+                e.preventDefault();
+                //By default we can't drop elems on non input tags,so as we're wanting to drop over onto div , we're using preventDefault and we're adding preventDefault as soon as img is dragged over to this whiteBox
+            });
+
+            whiteBox.addEventListener('dragenter', (e) => {
+                console.log('DragEnter has been triggered');
+                e.target.className += ' dashed';    //1
+            })
+
+            whiteBox.addEventListener('dragleave', (e) => {
+                console.log('DragLeave has been triggered');
+                e.target.className = 'whiteBox' //This is to undo //1
+            })
+
+            whiteBox.addEventListener('drop', (e) => {
+                console.log('Drop has been triggered');
+                e.target.append(imgBox);
+            })
+        }
+    </script>
+</body>
+</html>

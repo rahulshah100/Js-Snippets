@@ -1,0 +1,3 @@
+This is a PostMan WebApp which basically helps u check for a particular url ,if it provides u with post & get request's response.
+
+Many a times it happens that we dont have a ready backend which can respond to our get & post request ,yet we want to make sure our get & post requests are working ,we can use fake api's to test our get & post request there.Here a GUI has been provided for testing such fake requests

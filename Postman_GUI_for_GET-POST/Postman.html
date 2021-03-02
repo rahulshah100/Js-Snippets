@@ -1,0 +1,177 @@
+<!-- As sometimes when we dont have a ready backend which can respond to our get & post request ,yet we want to make sure our get & post requests are working ,we can use fake api's where we can send our get & post request ,here a GUI has been provided for testing such fake requests 
+    -Here url form input should consist of some website's url which offers an api request service for get,post request .
+    One such url is of :https://jsonplaceholder.typicode.com/posts    
+    for get request u dont need to send any data at all ,simply enter the url & press on Submit .
+    But for post u need to send data.Where u can send a json data E.g: {"title":"my_title_value_bitch","body":"My_bodyValBitch","userId":13} 
+    or u can add just parameter:values and further tht will be mended into a JSON object its E.g:
+                    parameter input : sdno(for 1st i/p) sdsd(for 2nd i/p)
+                                    : 23(for 2nd parameter(if we added it)1st i/p) 32l(2nd para 2nd i/p)....-->    
+
+                                    <!-- Ive used External Utilites like Bootstrap for front-end styling ,and Prism fr the black colored response box where,our response is fetched .Prism, according to our specified configuration wove a prism.js & prism.css files which were further downloaded and are attached via links in this .html file-->
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Prism (is website like bootstrap) CSS -->
+    <link rel="stylesheet" href="prism.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>PostMaster</title>
+</head>
+
+<body>
+    <!-- nav bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">PostMaster</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact us</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- heading -->
+    <div class="container">
+        <h1 class="my-3">Welcome to PostMaster</h1>
+    </div>
+
+    <div class="container">
+        <!-- URL box -->
+        <div class="form-group row">
+            <label for="url" class="col-sm-2 col-form-label">URL</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="url" placeholder="Enter URL here">
+            </div>
+        </div>
+
+        <!-- Request type box -->
+        <fieldset class="form-group">
+            <div class="row">
+                <legend class="col-form-label col-sm-2 pt-0">Request Type</legend>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="requestType" id="get" value="GET" checked>
+                        <label class="form-check-label" for="get">
+                            GET
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="requestType" id="post" value="POST">
+                        <label class="form-check-label" for="post">
+                            POST
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Content type box -->
+        <fieldset class="form-group">
+            <div class="row">
+                <legend class="col-form-label col-sm-2 pt-0">Content Type</legend>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="contentType" id="jsonRadio" value="json"
+                            checked>
+                        <label class="form-check-label" for="json">
+                            JSON
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="contentType" id="paramsRadio" value="params">
+                        <label class="form-check-label" for="params">
+                            Custom Parameters
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Parameters box - This will hide on clicking json option in content type  -->
+        <div id="parametersBox">
+            <div class="form-row">
+                <label for="url" class="col-sm-2 col-form-label">Parameter 1</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="parameterKey1" placeholder="Enter Parameter 1 Key">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="parameterValue1" placeholder="Enter Parameter 1 Value">
+                </div>
+                <button id="addParam" class="btn btn-primary">+</button>
+            </div>
+            <div id="params"></div>
+        </div>
+
+        <!-- Json Request box - This will hide on clicking parameters option in content type -->
+        <div class="my-3" id="requestJsonBox">
+            <div class="form-group row">
+                <label for="requestJsonText" class="col-sm-2 col-form-label">Enter Request Json</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" id="requestJsonText" rows="3"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit button which will trigger fetch api -->
+        <div class="form-group row my-2">
+            <!-- above with class my-2 we'll get 2px space in y axis ,by bootstrap -->
+            <div class="col-sm-10">
+                <button id="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+
+        <!-- Response Box -->
+        <div class="my-3" id="responseJsonBox">
+                <div class="form-group row">
+                    <label for="responseJsonText" class="col-sm-2 col-form-label">Response</label>
+                    <div class="col-sm-10">
+                        <!-- <textarea class="form-control" id="responseJsonText" rows="3">Your response will appear here</textarea> -->
+                           <!-- this above textarea was used for response box,bt then i replaced it with below prism response box.Same has been done in our js file-->
+                        <pre id='responsePre' class="language-javascript"style="max-height: 500px;">
+                             <!-- in pre ive added style so tht the response box doesnt gets too big and we can fix it's size & have scrollbar within it instead of in window object -->
+                            <code class="language-javascript" id="responsePrism"> Your response will appear here </code> 
+                        </pre>
+                              <!--  after choosing a style ,peeping in sourceCode of website for the part where demo of o/p was shown -> i found above tags should be used after installing css.prism & js.prism to invoke display property-->
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS,jquery -->
+    <div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    </div>
+
+    <!-- my js file & prism's js file -->
+    <script src="js_file.js"></script> 
+    <script src="prism.js"></script>  
+</body>
+</html>
