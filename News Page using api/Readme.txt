@@ -1,0 +1,1 @@
+Using an external Api to fetch news,Top News are displayed in card format here
