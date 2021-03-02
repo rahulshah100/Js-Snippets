@@ -1,0 +1,1 @@
+It's a webapp made for the purpose of systematic display of info - such as public profiles

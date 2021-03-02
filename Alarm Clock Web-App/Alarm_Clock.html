@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <title>Alarm Web-App</title>
+</head>
+
+<body>
+  <div class="container my-3">
+    <h1>Option to set an alarm</h1>
+    <form action='https://www.google.com'>
+      <div class="form-group">
+        <label for="alarm">Set Alarm</label>
+        <input type="text" class="form-control" id="alarm" name="alarm"
+          placeholder="Enter the time in yyyy-mm-dd hh:mm:ss"/>
+          <!-- Note:date should be in 24 hr format -->
+        <small id="alarmHelp" class="form-text text-muted">We'll never share your alarm with anyone else.</small>
+      </div>
+      <button id="alarmSubmit" type="submit" class="btn btn-primary">Set Alarm</button>
+    </form>    
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+  <script>
+    const alarmSubmit = document.getElementById('alarmSubmit');
+    
+    // Add an event listener to the submit button
+    alarmSubmit.addEventListener('click', setAlarm);
+    
+    var audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+    
+    // function to play the alarm ring tone
+    function ringBell() {
+        audio.play();
+    }
+ 
+  // This function will run whenever alarm is set from the UI
+  function setAlarm(e) {
+     e.preventDefault();//So as we press submit ,our page doesnt reloads onto the url specified by action attribute in form tag
+     const alarm = document.getElementById('alarm');
+     alarmDate = new Date(alarm.value);
+     console.log(`Setting Alarm for ${alarmDate}...`);
+     now = new Date();
+ 
+     let timeToAlarm = alarmDate - now;
+     console.log(timeToAlarm);
+     if(timeToAlarm>=0){
+         setTimeout(() => {
+             console.log("Ringing now")
+             ringBell();
+         }, timeToAlarm);
+     }
+     else{
+         console.log('Alram Not Set :- Enter a Valid Time');
+     }
+ }
+</script>
+</body>
+</html>
